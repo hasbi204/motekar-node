@@ -7,6 +7,11 @@ require('./commands/start')(bot);
 require('./commands/help')(bot);
 require('./commands/lang')(bot);
 
+bot.on('text', (ctx) => {
+  console.log('MASUK PESAN:', ctx.message.text);
+  ctx.reply('Test reply jalan');
+});
+
 bot.launch();
 
 console.log('Bot jalan...');
