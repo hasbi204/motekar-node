@@ -1,3 +1,4 @@
+require('dotenv').config();
 require('dns').setDefaultResultOrder('ipv4first');
 
 process.on('unhandledRejection', (err) => {
@@ -10,7 +11,7 @@ process.on('uncaughtException', (err) => {
 
 const logger = require('./logger');
 const { Telegraf } = require('telegraf');
-const bot = new Telegraf('836397615:AAH2Gvo_RkYp6aBl9XsNKgVtx0eAJ2hebxk');
+const bot = new Telegraf(process.env.BOT_TOKEN);
 
 require('./commands/start')(bot);
 require('./commands/help')(bot);
