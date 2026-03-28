@@ -28,10 +28,10 @@ async function monitor(bot) {
       if (!txs || txs.length === 0) { continue;}
       const latestTx = txs[0];
 
-      console.log('DEBUG:', {
-  walletId: w.id,
-  hash: latestTx?.hash,
-});
+//       console.log('DEBUG:', {
+//   walletId: w.id,
+//   hash: latestTx?.hash,
+// });
 
       if (!w.last_tx_hash) {
         await updateLastTx(w.id, latestTx.hash);
