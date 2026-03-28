@@ -1,6 +1,15 @@
 require('dotenv').config({ quiet: true });
 require('dns').setDefaultResultOrder('ipv4first');
 const monitor = require('./monitor');
+const { getNormalTx } = require('./etherscan');
+
+bot.command('testtx', async (ctx) => {
+  const address = '0x91Dca37856240E5e1906222ec79278b16420Dc92';
+
+  const txs = await getNormalTx(address);
+
+  ctx.reply(`Total TX: ${txs.length}`);
+});
 
 process.on('unhandledRejection', (err) => {
   logger.error('UNHANDLED REJECTION: ' + err.message);
