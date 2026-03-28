@@ -19,7 +19,7 @@ module.exports = (bot) => {
     await setUserLang(ctx.from.id, 'id');
     const lang = await getLang(ctx.from.id, 'id');
     // await ctx.answerCbQuery(lang.answer_choose_lang);
-    await ctx.telegram.answerCbQuery(ctx.callbackQuery.id, 'test notif', true);
+    await ctx.telegram.answerCallbackQuery(ctx.callbackQuery.id, 'test notif', true);
     await ctx.editMessageText(lang.choose_lang,
       Markup.inlineKeyboard([
         [
