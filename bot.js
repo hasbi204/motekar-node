@@ -60,5 +60,5 @@ if (!global.monitorStarted) {
   global.monitorStarted = true;
   setInterval(() => {
     monitor(bot);
-  }, 30000);
+  }, 20000);
 }
