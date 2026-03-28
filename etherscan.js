@@ -2,7 +2,7 @@ const axios = require('axios');
 
 const API_KEY = process.env.ETHERSCAN_API_KEY;
 
-const BASE_URL = 'https://api.etherscan.io/v2/api';
+const BASE_URL = 'https://api.etherscan.io/v2/api?chainid=1';
 
 async function getNormalTx(address) {
   const res = await axios.get(BASE_URL, {
