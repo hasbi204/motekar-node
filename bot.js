@@ -17,6 +17,7 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 require('./commands/start')(bot);
 require('./commands/help')(bot);
 require('./commands/lang')(bot);
+require('./commands/wallet')(bot);
 
 bot.on('my_chat_member', (ctx) => {
   const new_status = ctx.update.my_chat_member?.new_chat_member?.status;
