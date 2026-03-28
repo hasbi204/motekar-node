@@ -24,4 +24,8 @@ async function getUserWallets(userId) {
   return rows;
 }
 
-module.exports = { db, addWallet, getUserWallets };
+module.exports = {
+  db,
+  addWallet,
+  getUserWallets,
+};
