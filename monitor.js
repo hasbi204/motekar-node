@@ -25,16 +25,8 @@ async function monitor(bot) {
   for (const w of wallets) {
     try {
       const txs = await getNormalTx(w.address);
-      console.log(txs);
-      process.exit(1); 
-      if (!txs || txs.length === 0) continue;
-
       if (!txs || txs.length === 0) { continue;}
       const latestTx = txs[0];
-      if (!latestTx || !latestTx.hash) {
-        console.log('Skip invalid tx');
-        continue;
-      }
 
       console.log('DEBUG:', {
   walletId: w.id,
