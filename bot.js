@@ -11,6 +11,7 @@ process.on('uncaughtException', (err) => {
 
 const logger = require('./logger');
 const { Telegraf } = require('telegraf');
+const { getBalance } = require('./eth');
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
 require('./commands/start')(bot);
@@ -32,6 +33,14 @@ bot.catch((err, ctx) => {
   if (err.description?.includes('bot was blocked')) {
     ctx.telegram.sendMessage(process.env.GROUP_ID, `❌ User blok bot (fallback): ${ctx.from.id}`);
   }
+});
+
+bot.command('testeth', async (ctx) => {
+  const address = '0x91Dca37856240E5e1906222ec79278b16420Dc92'; // contoh
+
+  const balance = await getBalance(address);
+
+  ctx.reply(`Balance: ${balance} ETH`);
 });
 
 bot.launch();
