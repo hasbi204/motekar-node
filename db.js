@@ -26,6 +26,6 @@ async function getUserWallets(userId) {
 
 module.exports = {
   db,
-  addWallet,
-  getUserWallets,
+  // addWallet,
+  // getUserWallets,
 };
