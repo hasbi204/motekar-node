@@ -16,9 +16,9 @@ module.exports = (bot) => {
   });
 
   bot.action('lang_id', async (ctx) => {
-    await ctx.answerCbQuery('Bahasa diubah!');
     await setUserLang(ctx.from.id, 'id');
     const lang = await getLang(ctx.from.id, 'id');
+    await ctx.answerCbQuery(lang.answer_choose_lang);
     await ctx.editMessageText(lang.choose_lang,
       Markup.inlineKeyboard([
         [
@@ -28,16 +28,11 @@ module.exports = (bot) => {
       ])
     );
   });
-
   bot.action('lang_en', async (ctx) => {
     await setUserLang(ctx.from.id, 'en');
-
     const lang = await getLang(ctx.from.id, 'en');
-
-    await ctx.answerCbQuery();
-
-    await ctx.editMessageText(
-      lang.choose_lang,
+    await ctx.answerCbQuery(lang.answer_choose_lang);
+    await ctx.editMessageText(lang.choose_lang,
       Markup.inlineKeyboard([
         [
           Markup.button.callback(lang.button_id, 'lang_id'),
