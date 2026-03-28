@@ -10,7 +10,7 @@ async function getNormalTx(address) {
       module: 'account',
       action: 'txlist',
       address,
-      offset: 25,
+      offset: 15,
       page: 1,
       sort: 'desc',
       apikey: API_KEY,
