@@ -20,13 +20,13 @@ require('./commands/help')(bot);
 require('./commands/lang')(bot);
 require('./commands/wallet')(bot);
 
-bot.command('testtx', async (ctx) => {
-  const address = '0x91Dca37856240E5e1906222ec79278b16420Dc92';
+// bot.command('testtx', async (ctx) => {
+//   const address = '0x91Dca37856240E5e1906222ec79278b16420Dc92';
 
-  const txs = await getNormalTx(address);
+//   const txs = await getNormalTx(address);
 
-  ctx.reply(`Total TX: ${txs.length}`);
-});
+//   ctx.reply(`Total TX: ${txs.length}`);
+// });
 
 bot.on('my_chat_member', (ctx) => {
   const new_status = ctx.update.my_chat_member?.new_chat_member?.status;
