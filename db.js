@@ -32,4 +32,11 @@ async function deleteWallet(id, userId) {
   return result;
 }
 
-module.exports = { db, addWallet, getUserWallets, deleteWallet };
+async function updateBalance(walletId, balance) {
+  await db.execute(
+    'UPDATE wallets SET last_balance = ? WHERE id = ?',
+    [balance, walletId]
+  );
+}
+
+module.exports = { db, addWallet, getUserWallets, deleteWallet, updateBalance };

@@ -1,5 +1,6 @@
 require('dotenv').config({ quiet: true });
 require('dns').setDefaultResultOrder('ipv4first');
+const monitor = require('./monitor');
 
 process.on('unhandledRejection', (err) => {
   logger.error('UNHANDLED REJECTION: ' + err.message);
@@ -45,6 +46,11 @@ bot.command('testeth', async (ctx) => {
 });
 
 bot.launch();
-
 console.log('Bot starting...');
-// logger.info('Bot starting...');
+
+if (!global.monitorStarted) {
+  global.monitorStarted = true;
+  setInterval(() => {
+    monitor(bot);
+  }, 30000);
+}
