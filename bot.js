@@ -18,9 +18,9 @@ require('./commands/help')(bot);
 require('./commands/lang')(bot);
 
 bot.on('my_chat_member', (ctx) => {
-  const new_status = ctx.update.my_chat_member.new_chat_member.status;
-  const old_status = ctx.update.my_chat_member.old_chat_member.status;
-  const first_name = ctx.update.my_chat_member.from.first_name;
+  const new_status = ctx.update.my_chat_member?.new_chat_member?.status;
+  const old_status = ctx.update.my_chat_member?.old_chat_member?.status;
+  const first_name = ctx.update.my_chat_member?.from?.first_name || 'User';
   if (new_status === 'kicked') {
     ctx.telegram.sendMessage(process.env.GROUP_ID, `🚫 ${first_name} telah memblokir bot.`);
   } else if (old_status === 'kicked' && new_status === 'member') {
@@ -37,4 +37,4 @@ bot.catch((err, ctx) => {
 bot.launch();
 
 console.log('Bot starting...');
-logger.info('Bot starting...');
+// logger.info('Bot starting...');
