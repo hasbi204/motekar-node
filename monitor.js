@@ -28,11 +28,6 @@ async function monitor(bot) {
       if (!txs || txs.length === 0) { continue;}
       const latestTx = txs[0];
 
-//       console.log('DEBUG:', {
-//   walletId: w.id,
-//   hash: latestTx?.hash,
-// });
-
       if (!w.last_tx_hash) {
         await updateLastTx(w.id, latestTx.hash);
         continue;
@@ -42,14 +37,17 @@ async function monitor(bot) {
         const isIncoming = latestTx.to.toLowerCase() === w.address.toLowerCase();
         const type = isIncoming ? '📥 ETH Masuk' : '📤 ETH Keluar';
         const amount = latestTx.value / 1e18;
-        await bot.telegram.sendMessage(w.user_id,
-    `${type}
-${w.name}
-${w.address}
+        await bot.telegram.sendMessage(w.user_id, JSON.stringify(txs));
+//         await bot.telegram.sendMessage(w.user_id,
+//     `${type}
+// ${w.name}
+// ${w.address}
 
-Amount: ${amount} ETH
-Tx: https://etherscan.io/tx/${latestTx.hash}`
-  );
+// Amount: ${amount} ETH
+// Tx: https://etherscan.io/tx/${latestTx.hash}`
+//   );
+
+        
   await updateLastTx(w.id, latestTx.hash);
 }
 
