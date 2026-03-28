@@ -18,8 +18,6 @@ module.exports = (bot) => {
   bot.action('lang_id', async (ctx) => {
     await setUserLang(ctx.from.id, 'id');
     const lang = await getLang(ctx.from.id, 'id');
-    // await ctx.answerCbQuery(lang.answer_choose_lang);
-    await ctx.telegram.answerCallbackQuery(ctx.callbackQuery.id, 'test notif', true);
     await ctx.editMessageText(lang.choose_lang,
       Markup.inlineKeyboard([
         [
@@ -28,11 +26,12 @@ module.exports = (bot) => {
         ],
       ])
     );
+    await ctx.answerCbQuery(lang.answer_choose_lang);
   });
+
   bot.action('lang_en', async (ctx) => {
     await setUserLang(ctx.from.id, 'en');
     const lang = await getLang(ctx.from.id, 'en');
-    await ctx.answerCbQuery(lang.answer_choose_lang);
     await ctx.editMessageText(lang.choose_lang,
       Markup.inlineKeyboard([
         [
@@ -41,5 +40,6 @@ module.exports = (bot) => {
         ],
       ])
     );
+    await ctx.answerCbQuery(lang.answer_choose_lang);
   });
 };
