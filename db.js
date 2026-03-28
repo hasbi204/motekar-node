@@ -8,4 +8,24 @@ const db = mysql.createPool({
   database: process.env.DB_NAME,
 });
 
-module.exports = db;
+async function addWallet(userId, address, name) {
+  const [result] = await db.execute(
+    'INSERT INTO wallets (user_id, address, name) VALUES (?, ?, ?)',
+    [userId, address, name]
+  );
+  return result;
+}
+
+async function getUserWallets(userId) {
+  const [rows] = await db.execute(
+    'SELECT * FROM wallets WHERE user_id = ?',
+    [userId]
+  );
+  return rows;
+}
+
+module.exports = {
+  db,
+  addWallet,
+  getUserWallets,
+};
