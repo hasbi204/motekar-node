@@ -48,9 +48,9 @@ bot.command('testeth', async (ctx) => {
 bot.launch();
 console.log('Bot starting...');
 
-if (!global.monitorStarted) {
-  global.monitorStarted = true;
-  setInterval(() => {
-    monitor(bot);
-  }, 10000);
-}
+// if (!global.monitorStarted) {
+//   global.monitorStarted = true;
+//   setInterval(() => {
+//     monitor(bot);
+//   }, 10000);
+// }
