@@ -5,11 +5,13 @@ const { Markup } = require('telegraf');
 module.exports = (bot) => {
   bot.command('lang', async (ctx) => {
     const lang = await getLang(ctx.from.id, ctx.from.language_code);
-    ctx.reply(lang.choose,
+
+    ctx.reply(
+      lang.choose_lang,
       Markup.inlineKeyboard([
         [
-          Markup.button.callback('🇮🇩 Indonesia', 'lang_id'),
-          Markup.button.callback('🇺🇸 English', 'lang_en'),
+          Markup.button.callback(lang.button_id, 'lang_id'),
+          Markup.button.callback(lang.button_en, 'lang_en'),
         ],
       ])
     );
@@ -17,13 +19,17 @@ module.exports = (bot) => {
 
   bot.action('lang_id', async (ctx) => {
     await setUserLang(ctx.from.id, 'id');
+
     const lang = await getLang(ctx.from.id, 'id');
+
+    await ctx.answerCbQuery();
+
     await ctx.editMessageText(
-      lang.choose,
+      lang.choose_lang,
       Markup.inlineKeyboard([
         [
-          Markup.button.callback('🇮🇩 Indonesia', 'lang_id'),
-          Markup.button.callback('🇺🇸 English', 'lang_en'),
+          Markup.button.callback(lang.button_id, 'lang_id'),
+          Markup.button.callback(lang.button_en, 'lang_en'),
         ],
       ])
     );
@@ -31,13 +37,17 @@ module.exports = (bot) => {
 
   bot.action('lang_en', async (ctx) => {
     await setUserLang(ctx.from.id, 'en');
+
     const lang = await getLang(ctx.from.id, 'en');
+
+    await ctx.answerCbQuery();
+
     await ctx.editMessageText(
-      lang.choose,
+      lang.choose_lang,
       Markup.inlineKeyboard([
         [
-          Markup.button.callback('🇮🇩 Indonesian', 'lang_id'),
-          Markup.button.callback('🇺🇸 English', 'lang_en'),
+          Markup.button.callback(lang.button_id, 'lang_id'),
+          Markup.button.callback(lang.button_en, 'lang_en'),
         ],
       ])
     );
