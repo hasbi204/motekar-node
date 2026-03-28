@@ -24,4 +24,12 @@ async function getUserWallets(userId) {
   return rows;
 }
 
-module.exports = { db, addWallet, getUserWallets };
+async function deleteWallet(id, userId) {
+  const [result] = await db.execute(
+    'DELETE FROM wallets WHERE id = ? AND user_id = ?',
+    [id, userId]
+  );
+  return result;
+}
+
+module.exports = { db, addWallet, getUserWallets, deleteWallet };

@@ -1,5 +1,5 @@
-const { addWallet } = require('../db');
-const { getUserWallets } = require('../db');
+const { addWallet, getUserWallets, deleteWallet } = require('../db');
+const { Markup } = require('telegraf');
 
 module.exports = (bot) => {
   bot.command('addwallet', async (ctx) => {
@@ -30,5 +30,25 @@ module.exports = (bot) => {
       text += `${i + 1}. ${w.name}\n${w.address}\n\n`;
     });
     ctx.reply(text);
+  });
+
+  bot.command('deletewallet', async (ctx) => {
+    const userId = ctx.from.id;
+    const wallets = await getUserWallets(userId);
+    if (wallets.length === 0) {
+      return ctx.reply('❌ Tidak ada wallet');
+    }
+    const buttons = wallets.map((w) => [
+      Markup.button.callback(`${w.name} ❌`, `del_${w.id}`),
+    ]);
+    ctx.reply('Pilih wallet yang mau dihapus:', Markup.inlineKeyboard(buttons));
+  });
+
+  bot.action(/del_(\d+)/, async (ctx) => {
+    const walletId = ctx.match[1];
+    const userId = ctx.from.id;
+    await deleteWallet(walletId, userId);
+    await ctx.answerCbQuery('Berhasil dihapus');
+    await ctx.editMessageText('✅ Wallet berhasil dihapus');
   });
 };
