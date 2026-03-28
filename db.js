@@ -39,4 +39,34 @@ async function updateBalance(walletId, balance) {
   );
 }
 
-module.exports = { db, addWallet, getUserWallets, deleteWallet, updateBalance };
+async function updateLastTx(walletId, hash) {
+  await db.execute(
+    'UPDATE wallets SET last_tx_hash = ? WHERE id = ?',
+    [hash, walletId]
+  );
+}
+
+async function updateLastTokenTx(walletId, hash) {
+  await db.execute(
+    'UPDATE wallets SET last_token_tx_hash = ? WHERE id = ?',
+    [hash, walletId]
+  );
+}
+
+async function updateLastInternalTx(walletId, hash) {
+  await db.execute(
+    'UPDATE wallets SET last_internal_tx_hash = ? WHERE id = ?',
+    [hash, walletId]
+  );
+}
+
+module.exports = {
+  db,
+  addWallet,
+  getUserWallets,
+  deleteWallet,
+  updateBalance,
+  updateLastTx,
+  updateLastTokenTx,
+  updateLastInternalTx,
+};
