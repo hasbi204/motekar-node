@@ -110,20 +110,20 @@ function startWS(bot) {
         minimumFractionDigits: 0 // Mengatur agar tidak ada ,00 di belakang
       }).format(idr);
 
-      await bot.telegram.sendMessage(
-        matched.user_id,
-        `${type}
-${matched.name}
-${matched.address}
+//       await bot.telegram.sendMessage(
+//         matched.user_id,
+//         `${type}
+// ${matched.name}
+// ${matched.address}
 
-Amount: ${eth} ETH (~ ${formatRupiah})
-Tx: https://etherscan.io/tx/${tx.hash}`,
-{
-  parse_mode: 'HTML',
-  link_preview_options: {
-    is_disabled: true
-  }
-});
+// Amount: ${eth} ETH (~ ${formatRupiah})
+// Tx: https://etherscan.io/tx/${tx.hash}`,
+// {
+//   parse_mode: 'HTML',
+//   link_preview_options: {
+//     is_disabled: true
+//   }
+// });
       
       sentTx.add(tx.hash);
       return;
@@ -131,6 +131,7 @@ Tx: https://etherscan.io/tx/${tx.hash}`,
 
     // Handle transaksi ERC20
     if (msg.method === 'eth_subscription' && msg.params?.result?.topics) {
+      console.log('RAW LOG:', msg.params?.result);
       const log = msg.params.result;
       if (!log.topics || log.topics.length < 3) return;
       const from = '0x' + log.topics[1].slice(26);
