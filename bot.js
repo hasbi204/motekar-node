@@ -1,7 +1,10 @@
 require('dotenv').config({ quiet: true });
 require('dns').setDefaultResultOrder('ipv4first');
+const startWS = require('./ws');
 const monitor = require('./monitor');
 const { getNormalTx } = require('./etherscan');
+
+startWS();
 
 process.on('unhandledRejection', (err) => {
   logger.error('UNHANDLED REJECTION: ' + err.message);
