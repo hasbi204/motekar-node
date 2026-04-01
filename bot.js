@@ -4,8 +4,6 @@ const startWS = require('./ws');
 const monitor = require('./monitor');
 const { getNormalTx } = require('./etherscan');
 
-startWS();
-
 process.on('unhandledRejection', (err) => {
   logger.error('UNHANDLED REJECTION: ' + err.message);
 });
@@ -58,7 +56,7 @@ bot.command('testeth', async (ctx) => {
 
 bot.launch();
 console.log('Bot starting...');
-
+startWS();
 // if (!global.monitorStarted) {
 //   global.monitorStarted = true;
 //   setInterval(() => {
