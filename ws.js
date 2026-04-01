@@ -129,9 +129,12 @@ function startWS(bot) {
       return;
     }
 
+    console.log('RAW LOG:', msg.params?.result);
+    return;
+
     // Handle transaksi ERC20
     if (msg.method === 'eth_subscription' && msg.params?.result?.topics) {
-      console.log('RAW LOG:', msg.params?.result);
+      // console.log('RAW LOG:', msg.params?.result);
       const log = msg.params.result;
       if (!log.topics || log.topics.length < 3) return;
       const from = '0x' + log.topics[1].slice(26);
