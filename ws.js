@@ -52,17 +52,17 @@ function startWS(bot) {
     console.log('✅ WebSocket connected');
 
     // 1️⃣ Subscribe ETH pending tx
-    ws.send(JSON.stringify({
-      jsonrpc: '2.0',
-      id: 1,
-      method: 'eth_subscribe',
-      params: ['newPendingTransactions'],
-    }));
+    // ws.send(JSON.stringify({
+    //   jsonrpc: '2.0',
+    //   id: 1,
+    //   method: 'eth_subscribe',
+    //   params: ['newPendingTransactions'],
+    // }));
 
     // 2️⃣ Subscribe ERC20 logs
     ws.send(JSON.stringify({
       jsonrpc: '2.0',
-      id: 2,
+      id: 1,
       method: 'eth_subscribe',
       params: [
         'logs',
