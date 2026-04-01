@@ -77,7 +77,7 @@ function startWS(bot) {
 
   ws.on('message', async (data) => {
     const msg = JSON.parse(data.toString());
-    console.log('RAW LOG:', msg.params?.result);
+    console.log('RAW LOG:', msg.params);
     return;
 
     // Handle transaksi ETH
