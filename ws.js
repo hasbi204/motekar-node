@@ -40,7 +40,7 @@ function sendRPC(ws, method, params, id = 2) {
 function startWS(bot) {
   loadWallets();
   setInterval(loadWallets, 30000); // tiap 30 detik
-  
+
   setInterval(() => {
   sentTx.clear();
   console.log('🧹 Clear TX cache');
@@ -79,7 +79,7 @@ function startWS(bot) {
 
       const isIncoming = to === matched.address;
       const eth = parseInt(tx.value, 16) / 1e18;
-      const type = isIncoming ? '📥 ETH Masuk' : '📤 ETH Keluar';
+      const type = isIncoming ? '🟢 ETH Masuk' : '🔴 ETH Keluar';
 
       if (sentTx.has(tx.hash)) return;
 
@@ -90,7 +90,13 @@ ${matched.name}
 ${matched.address}
 
 Amount: ${eth} ETH
-Tx: https://etherscan.io/tx/${tx.hash}`);
+Tx: https://etherscan.io/tx/${tx.hash}`,
+{
+  parse_mode: 'HTML',
+  link_preview_options: {
+    is_disabled: true
+  }
+});
       
       sentTx.add(tx.hash);
     }
