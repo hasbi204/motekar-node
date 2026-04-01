@@ -57,23 +57,30 @@ function startWS(bot) {
     //   id: 1,
     //   method: 'eth_subscribe',
     //   params: ['newPendingTransactions'],
-    // }));
+    // })); {"jsonrpc":"2.0","id": 1, "method": "eth_subscribe", "params": ["logs", {"address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", "topics": ["0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"]}]}
+    // wscat -c wss://mainnet.infura.io/ws/v3/<YOUR-API-KEY> -x ''
 
     // 2️⃣ Subscribe ERC20 logs
-    ws.send(JSON.stringify({
-      jsonrpc: '2.0',
-      id: 1,
-      method: 'eth_subscribe',
-      params: [
-        'logs',
-        {
-          address: '0x85b931A32a0725Be14285B66f1a22178c672d69B',
-          topics: [
-            '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55aeea4a7f4f'
-          ]
-        }
-      ],
-    }));
+    ws.send({"jsonrpc": "2.0", "id": 1, "method": "eth_subscribe", "params": ["logs", {"address": "0x85b931A32a0725Be14285B66f1a22178c672d69B", "topics":["0xd78a0cb8bb633d06981248b816e7bd33c2a35a6089241d099fa519e361cab902","0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55aeea4a7f4f"]}]}
+
+
+    //   JSON.stringify({
+    //   jsonrpc: '2.0',
+    //   id: 1,
+    //   method: 'eth_subscribe',
+    //   params: [
+    //     'logs',
+    //     {
+    //       address: '0x85b931A32a0725Be14285B66f1a22178c672d69B',
+    //       topics: [
+    //         '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55aeea4a7f4f'
+    //       ]
+    //     }
+    //   ],
+
+    // })
+
+      );
   });
 
   ws.on('message', async (data) => {
