@@ -74,6 +74,9 @@ function startWS(bot) {
       const isIncoming = to === matched.address;
       const eth = parseInt(tx.value, 16) / 1e18;
       const type = isIncoming ? '📥 ETH Masuk' : '📤 ETH Keluar';
+
+      if (sentTx.has(tx.hash)) return;
+
       await bot.telegram.sendMessage(
         matched.user_id,
         `${type}
@@ -82,6 +85,8 @@ ${matched.address}
 
 Amount: ${eth} ETH
 Tx: https://etherscan.io/tx/${tx.hash}`);
+      
+      sentTx.add(tx.hash);
     }
   });
 
