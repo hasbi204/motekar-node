@@ -61,7 +61,8 @@ function startWS(bot) {
     // wscat -c wss://mainnet.infura.io/ws/v3/<YOUR-API-KEY> -x ''
 
     // 2️⃣ Subscribe ERC20 logs
-    ws.send(JSON.stringify({"jsonrpc": "2.0", "id": 1, "method": "eth_subscribe", "params": ["logs", "topics":["0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55aeea4a7f4f"]]})
+    ws.send(JSON.stringify({"jsonrpc": "2.0", "id": 1, "method": "eth_subscribe", "params": ["logs", "topics":["0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55aeea4a7f4f"]
+  ]})
 
       // {"jsonrpc": "2.0", "id": 1, "method": "eth_subscribe", "params": ["logs", {"address": "0x85b931A32a0725Be14285B66f1a22178c672d69B", "topics":["0xd78a0cb8bb633d06981248b816e7bd33c2a35a6089241d099fa519e361cab902","0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55aeea4a7f4f"]}]}
 
