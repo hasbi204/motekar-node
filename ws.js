@@ -73,8 +73,8 @@ function startWS(bot) {
       params: [
         "logs",
         {
-          "address": "0x85b931A32a0725Be14285B66f1a22178c672d69B",
-          "topics": [
+          address: "0x85b931A32a0725Be14285B66f1a22178c672d69B",
+          topics: [
             "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55aeea4a7f4f"
           ]
         }
