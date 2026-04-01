@@ -1,5 +1,6 @@
 const WebSocket = require('ws');
 const { db } = require('./db');
+const { getETHPrice } = require('./price');
 const ALCHEMY_WS = process.env.ALCHEMY_WS;
 const sentTx = new Set();
 
@@ -83,13 +84,22 @@ function startWS(bot) {
 
       if (sentTx.has(tx.hash)) return;
 
+      const price = await getETHPrice();
+      const idr = eth * price;
+
+      const formatRupiah = new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0 // Mengatur agar tidak ada ,00 di belakang
+      }).format(idr);
+
       await bot.telegram.sendMessage(
         matched.user_id,
         `${type}
 ${matched.name}
 ${matched.address}
 
-Amount: ${eth} ETH
+Amount: ${eth} ETH (~ ${formatRupiah})
 Tx: https://etherscan.io/tx/${tx.hash}`,
 {
   parse_mode: 'HTML',
