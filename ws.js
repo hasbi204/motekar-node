@@ -25,7 +25,7 @@ function startWS() {
     if (msg.method === 'eth_subscription') {
       const txHash = msg.params.result;
 
-      // console.log('TX HASH:', txHash);
+      console.log('TX HASH:', txHash);
     }
   });
 
