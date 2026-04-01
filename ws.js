@@ -52,21 +52,22 @@ function startWS(bot) {
     console.log('✅ WebSocket connected');
 
     // 1️⃣ Subscribe ETH pending tx
-    ws.send(JSON.stringify({
-      jsonrpc: '2.0',
-      id: 1,
-      method: 'eth_subscribe',
-      params: ['newPendingTransactions'],
-    }));
+    // ws.send(JSON.stringify({
+    //   jsonrpc: '2.0',
+    //   id: 1,
+    //   method: 'eth_subscribe',
+    //   params: ['newPendingTransactions'],
+    // }));
 
     // 2️⃣ Subscribe ERC20 logs
     ws.send(JSON.stringify({
       jsonrpc: '2.0',
-      id: 2,
+      id: 1,
       method: 'eth_subscribe',
       params: [
         'logs',
         {
+          address: '0x85b931A32a0725Be14285B66f1a22178c672d69B',
           topics: [
             '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55aeea4a7f4f'
           ]
@@ -77,39 +78,39 @@ function startWS(bot) {
 
   ws.on('message', async (data) => {
     const msg = JSON.parse(data.toString());
-    console.log('LOG EVENT:', msg);
+    console.log(msg);
 
     // Handle transaksi ETH
-    if (msg.method === 'eth_subscription' && typeof msg.params.result === 'string') {
-      const txHash = msg.params.result;
-      sendRPC(ws, 'eth_getTransactionByHash', [txHash], Date.now());
-      return;
-    }
-    if (msg.result && msg.result.hash) {
-      const tx = msg.result;
-      if (!tx.value || tx.value === '0x0') return;
-      if (!tx.to) return;
-      if (tx.input && tx.input !== '0x') return;
+//     if (msg.method === 'eth_subscription' && typeof msg.params.result === 'string') {
+//       const txHash = msg.params.result;
+//       sendRPC(ws, 'eth_getTransactionByHash', [txHash], Date.now());
+//       return;
+//     }
+//     if (msg.result && msg.result.hash) {
+//       const tx = msg.result;
+//       if (!tx.value || tx.value === '0x0') return;
+//       if (!tx.to) return;
+//       if (tx.input && tx.input !== '0x') return;
 
-      const from = tx.from?.toLowerCase();
-      const to = tx.to?.toLowerCase();
-      const matched = trackedWallets.find(w => w.address === from || w.address === to);
-      if (!matched) return;
+//       const from = tx.from?.toLowerCase();
+//       const to = tx.to?.toLowerCase();
+//       const matched = trackedWallets.find(w => w.address === from || w.address === to);
+//       if (!matched) return;
 
-      const isIncoming = to === matched.address;
-      const eth = parseInt(tx.value, 16) / 1e18;
-      const type = isIncoming ? '🟢 ETH Masuk' : '🔴 ETH Keluar';
+//       const isIncoming = to === matched.address;
+//       const eth = parseInt(tx.value, 16) / 1e18;
+//       const type = isIncoming ? '🟢 ETH Masuk' : '🔴 ETH Keluar';
 
-      if (sentTx.has(tx.hash)) return;
+//       if (sentTx.has(tx.hash)) return;
 
-      const price = await getETHPrice();
-      const idr = eth * price;
+//       const price = await getETHPrice();
+//       const idr = eth * price;
 
-      const formatRupiah = new Intl.NumberFormat('id-ID', {
-        style: 'currency',
-        currency: 'IDR',
-        minimumFractionDigits: 0 // Mengatur agar tidak ada ,00 di belakang
-      }).format(idr);
+//       const formatRupiah = new Intl.NumberFormat('id-ID', {
+//         style: 'currency',
+//         currency: 'IDR',
+//         minimumFractionDigits: 0 // Mengatur agar tidak ada ,00 di belakang
+//       }).format(idr);
 
 //       await bot.telegram.sendMessage(
 //         matched.user_id,
@@ -126,9 +127,9 @@ function startWS(bot) {
 //   }
 // });
       
-      sentTx.add(tx.hash);
-      return;
-    }
+//       sentTx.add(tx.hash);
+//       return;
+//     }
 
     // Handle transaksi ERC20
     if (msg.method === 'eth_subscription' && msg.params?.result?.topics) {
