@@ -35,7 +35,11 @@ function startWS() {
     }
     if (msg.result && msg.result.hash) {
       const tx = msg.result;
-      console.log('TX DETAIL:', {
+      if (!tx.value || tx.value === '0x0') return;
+      if (!tx.to) return;
+      if (tx.input && tx.input !== '0x') return;
+
+      console.log('✅ ETH TX VALID:', {
         from: tx.from,
         to: tx.to,
         value: tx.value,
