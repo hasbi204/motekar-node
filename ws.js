@@ -40,6 +40,12 @@ function sendRPC(ws, method, params, id = 2) {
 function startWS(bot) {
   loadWallets();
   setInterval(loadWallets, 30000); // tiap 30 detik
+  
+  setInterval(() => {
+  sentTx.clear();
+  console.log('🧹 Clear TX cache');
+}, 10 * 60 * 1000); // 10 menit
+
   const ws = new WebSocket(ALCHEMY_WS);
   ws.on('open', () => {
     console.log('✅ WebSocket connected');
