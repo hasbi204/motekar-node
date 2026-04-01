@@ -52,24 +52,23 @@ function startWS(bot) {
     console.log('✅ WebSocket connected');
 
     // 1️⃣ Subscribe ETH pending tx
-    // ws.send(JSON.stringify({
-    //   jsonrpc: '2.0',
-    //   id: 1,
-    //   method: 'eth_subscribe',
-    //   params: ['newPendingTransactions'],
-    // }));
+    ws.send(JSON.stringify({
+      jsonrpc: '2.0',
+      id: 1,
+      method: 'eth_subscribe',
+      params: ['newPendingTransactions'],
+    }));
 
     // 2️⃣ Subscribe ERC20 logs
     ws.send(JSON.stringify({
       jsonrpc: '2.0',
-      id: 1,
+      id: 2,
       method: 'eth_subscribe',
       params: [
         'logs',
         {
           topics: [
-            '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55aeea4a7f4f',
-            '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'
+            '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55aeea4a7f4f'
           ]
         }
       ],
@@ -78,8 +77,7 @@ function startWS(bot) {
 
   ws.on('message', async (data) => {
     const msg = JSON.parse(data.toString());
-    console.log('RAW LOG:', msg.params);
-    return;
+    console.log('LOG EVENT:', msg);
 
     // Handle transaksi ETH
     if (msg.method === 'eth_subscription' && typeof msg.params.result === 'string') {
@@ -132,12 +130,8 @@ function startWS(bot) {
       return;
     }
 
-    console.log('RAW LOG:', msg.params?.result);
-    return;
-
     // Handle transaksi ERC20
     if (msg.method === 'eth_subscription' && msg.params?.result?.topics) {
-      // console.log('RAW LOG:', msg.params?.result);
       const log = msg.params.result;
       if (!log.topics || log.topics.length < 3) return;
       const from = '0x' + log.topics[1].slice(26);
