@@ -38,7 +38,7 @@ function sendRPC(ws, method, params, id = 2) {
 
 function startWS(bot) {
   loadWallets();
-  setInterval(loadWallets, 40000); // tiap 30 detik
+  setInterval(loadWallets, 30000); // tiap 30 detik
   const ws = new WebSocket(ALCHEMY_WS);
   ws.on('open', () => {
     console.log('✅ WebSocket connected');
