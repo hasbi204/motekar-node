@@ -1,6 +1,7 @@
 const WebSocket = require('ws');
 const { db } = require('./db');
 const ALCHEMY_WS = process.env.ALCHEMY_WS;
+const sentTx = new Set();
 
 let trackedWallets = [];
 let isLoading = false;
